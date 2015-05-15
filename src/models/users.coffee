@@ -7,17 +7,17 @@ request = require 'request'
 RequestUrIs = require "../enums/request_uris"
 helps = require "../utils/helps"
 
-_makeReqOptions = (self, uri, method, params) ->
-  params.appid = self.appid
-  params.pf or= self.pf
-  params.format or= self.format
-  params.sig = self.makeSignature uri, method, params
-  options =
-    url: "#{self.host}#{uri}"
-    json: true
-    method: method
-    body: params
-  return options
+#_makeReqOptions = (self, uri, method, params) ->
+#  params.appid = self.appid
+#  params.pf or= self.pf
+#  params.format or= self.format
+#  params.sig = self.makeSignature uri, method, params
+#  options =
+#    url: "#{self.host}#{uri}"
+#    json: true
+#    method: method
+#    body: params
+#  return options
 
 _makeReqOptions = helps.makeReqOptions
 
@@ -36,8 +36,8 @@ _makeReqOptions = helps.makeReqOptions
 #           注意：json、xml为小写，否则将不识别。format不传或非xml，则返回json格式数据。
 # return json 根据应用平台的不同，返回的数据会不相同
 ###
-getInfo = (params, callback) ->
-  options = _makeReqOptions(@, RequestUrIs.GET_INFO_URI, "POST", params)
+getInfo = (params, method='POST', callback) ->
+  options = _makeReqOptions(@, RequestUrIs.GET_INFO_URI, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -67,8 +67,8 @@ getInfo = (params, callback) ->
 #   ]
 # }
 ###
-getMultiInfo = (params, callback) ->
-  options = _makeReqOptions(@, RequestUrIs.GET_MULTI_INFO_URI, "POST", params)
+getMultiInfo = (params, method='POST',  callback) ->
+  options = _makeReqOptions(@, RequestUrIs.GET_MULTI_INFO_URI, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -86,8 +86,8 @@ getMultiInfo = (params, callback) ->
 # }
 #
 ###
-setAchievement = (params, callback) ->
-  options = _makeReqOptions(@, RequestUrIs.SET_ACHIEVEMENT_URI, "POST", params)
+setAchievement = (params, method='POST', callback) ->
+  options = _makeReqOptions(@, RequestUrIs.SET_ACHIEVEMENT_URI, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -102,8 +102,8 @@ setAchievement = (params, callback) ->
 #   pull_cnt  否  int 拉取排行的个数（最小为3，最大为50，默认3）
 #   direction 否  int 拉取排行的方向（-1往前拉取，0向后拉取，默认0）
 ###
-getGamebarRanklist = (params, callback) ->
-  options = _makeReqOptions(@, RequestUrIs.GET_GAMEBAR_RANKLIST_URI, "POST", params)
+getGamebarRanklist = (params, method='POST', callback) ->
+  options = _makeReqOptions(@, RequestUrIs.GET_GAMEBAR_RANKLIST_URI, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -120,8 +120,8 @@ getGamebarRanklist = (params, callback) ->
 # return  见API http://wiki.open.qq.com/wiki/v3/user/buy_playzone_item
 #   吐槽：奇葩的腾讯， API中得返回参数竟然和实际不一样？
 ###
-buyPlayzoneItem = (params, callback) ->
-  options = _makeReqOptions(@, RequestUrIs.BUY_PLAYZONE_ITEM_URI, "POST", params)
+buyPlayzoneItem = (params, method='POST', callback) ->
+  options = _makeReqOptions(@, RequestUrIs.BUY_PLAYZONE_ITEM_URI, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -137,8 +137,8 @@ buyPlayzoneItem = (params, callback) ->
 # return 见API http://wiki.open.qq.com/wiki/v3/user/get_playzone_userinfo#3_.E7.A4.BA.E4.BE.8B.E4.BB.A3.E7.A0.81
 #
 ###
-getPlayzoneUserinfo = (params, callback) ->
-  options = _makeReqOptions(@, RequestUrIs.GET_PLAYZONE_USERINFO_URI, "POST", params)
+getPlayzoneUserinfo = (params, method='POST',  callback) ->
+  options = _makeReqOptions(@, RequestUrIs.GET_PLAYZONE_USERINFO_URI, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -155,8 +155,8 @@ getPlayzoneUserinfo = (params, callback) ->
 #   content 是  string  超越消息的积分文字，形如“10秒”，“100分”之类
 #   qua 是  string  手机空间版本标识，例如：V1_AND_QZ_4.9.3_148_RDM_T
 ###
-sendGamebarMsg = (params, callback) ->
-  options = _makeReqOptions(@, RequestUrIs.SEND_GAMEBAR_MSG, "POST", params)
+sendGamebarMsg = (params, method='POST', callback) ->
+  options = _makeReqOptions(@, RequestUrIs.SEND_GAMEBAR_MSG, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -169,8 +169,8 @@ sendGamebarMsg = (params, callback) ->
 # 判断玩家是否登录平台, 可以用来openkey 续期（openkey 有效时间2个小时）
 # callback 没有错误就表示玩家已登录
 ###
-isLogin = (params, callback) ->
-  options  = _makeReqOptions(@, RequestUrIs.IS_LOGIN_URI, "POST", params)
+isLogin = (params, method='POST', callback) ->
+  options  = _makeReqOptions(@, RequestUrIs.IS_LOGIN_URI, method, params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -178,6 +178,64 @@ isLogin = (params, callback) ->
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null
   return
+
+
+###############################################################################################################
+# 以下接口可能是与其它（空间，朋友....）有关， 但与玩吧无关的，
+###############################################################################################################
+
+#获取登录用户各类增值服务信息
+# member_vip   string  是否查询QQ会员信息，1为查询，0或者不写为不查询。
+# blue_vip   string  是否查询蓝钻信息，1为查询，0或者不写为不查询。
+# yellow_vip   string  是否查询黄钻信息，1为查询，0或者不写为不查询。
+# red_vip    string  是否查询红钻信息，1为查询，0或者不写为不查询。
+# green_vip    string  是否查询绿钻信息，1为查询，0或者不写为不查询。
+# pink_vip   string  是否查询粉钻信息，1为查询，0或者不写为不查询。
+# superqq    string  是否查询超级qq信息，1为查询，0或者不写为不查询。
+# is_3366    string  是否查询3366信息，1为查询，0或者不写为不查询。
+#
+# 如果不传私有参数，或传入的私有参数的值都为“0”，只返回蓝钻和黄钻的相关信息。
+totalVipInfo = (params, method, callback) ->
+  options = _makeReqOptions(@, RequestUrIs.TOTAL_VIP_INFO_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    console.dir body
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    return callback null, body
+  return
+
+# 用户是否黄钻
+isVip = (params, method, callback) ->
+  options = _makeReqOptions(@, RequestUrIs.IS_VIP_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    console.dir body
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    return callback null, body
+  return
+
+# 查询用户好友是否开通vip
+#     fopenids 必须 string 需要获取数据的openid列表，中间以_隔开，每次最多100个。
+friendsVipInfo = (params, method, callback) ->
+  options = _makeReqOptions(@, RequestUrIs.FRIENDS_VIP_INFO_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    console.dir body
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    return callback null, body
+  return
+
+#用户是否安装了应用
+isSetup = (params, method, callback) ->
+  options = _makeReqOptions(@, RequestUrIs.IS_SETUP_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    console.dir body
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    isSetuped = if body.setuped == 1 then true else false
+    return callback null, isSetuped
+  return
+
 
 module.exports =
   getInfo: getInfo
@@ -189,5 +247,9 @@ module.exports =
   sendGamebarMsg: sendGamebarMsg
   isLogin:isLogin
 
+  totalVipInfo:totalVipInfo
+  isVip: isVip
+  friendsVipInfo: friendsVipInfo
+  isSetup: isSetup
 
 

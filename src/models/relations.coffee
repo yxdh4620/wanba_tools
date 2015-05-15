@@ -1,5 +1,5 @@
 ###
-# /v3/relation 下的接口
+# /v3/relation 下的接口(关系链类)
 ###
 
 debuglog = require("debug")("wanba_tools::users")
@@ -22,7 +22,7 @@ _makeReqOptions = helps.makeReqOptions
 # }
 ###
 getAppFriends = (params, callback) ->
-  options  = _makeReqOptions(@, RequestUrIs.IS_LOGIN_URI, "POST", params)
+  options  = _makeReqOptions(@, RequestUrIs.GET_APP_FRIENDS_URI, "POST", params)
   console.dir options
   request options, (err, res, body) ->
     return callback err if err?
@@ -30,6 +30,8 @@ getAppFriends = (params, callback) ->
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null
   return
+
+#isFriend = ()
 
 module.exports =
   getAppFriends:getAppFriends
