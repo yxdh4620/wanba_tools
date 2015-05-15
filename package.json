@@ -1,0 +1,49 @@
+{
+  "name": "wanba-tools",
+  "description": "wanba-tools APP",
+  "version": "0.4.6",
+  "homepage": "https://github.com/yxdh4620/wanba-tools",
+  "author": {
+    "name": "yxdh4620",
+    "email": "yxdh4620@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yxdh4620/wanba-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yxdh4620/wanba-tools/issues"
+  },
+  "licenses": [
+    {
+      "type": "NA",
+      "url": "https://github.com/yxdh4620/wanba-tools/blob/master/LICENSE-NA"
+    }
+  ],
+  "main": "./lib/wanba_tools.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "coffee": "coffee -o ./lib/ -cw ./src/",
+    "test" : "mocha  --compilers coffee:coffee-script/register tests/"
+  },
+  "dependencies": {
+    "commander": "latest",
+    "underscore": "latest",
+    "request": "2.27.0",
+    "debug": "latest",
+    "iconv-lite":"0.4.7",
+    "xml2js": "0.4.6"
+  },
+  "devDependencies": {
+    "coffee-script": "1.8.0",
+    "commander": "latest",
+    "underscore": "latest",
+    "request": "2.27.0",
+    "debug": "latest",
+    "iconv-lite":"0.4.7",
+    "xml2js": "0.4.6"
+  },
+  "keywords": []
+}
