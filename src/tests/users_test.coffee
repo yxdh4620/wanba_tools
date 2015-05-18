@@ -5,9 +5,9 @@ _ = require 'underscore'
 config = require "../config/test_config"
 WanbaTools = require "../wanba_tools"
 
-options = config
+wbtOptions = config
 
-wbt = new WanbaTools(options)
+wbt = new WanbaTools(wbtOptions)
 console.dir wbt
 
 params =
@@ -26,152 +26,151 @@ describe "test users", ->
       options =
         openid: params.openid
         openkey: params.openkey
-
       wbt.getInfo  options, method, (err, info) ->
         console.error "ERROR:: #{err}" if err?
         console.dir info
         done()
 
-  describe "getMultiInfo", ->
-    it "should get multi info", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        fopenids : "#{params.openid}_#{params.openid}"
-      wbt.getMultiInfo options, method, (err, info) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir info
-        done()
+  #describe "getMultiInfo", ->
+  #  it "should get multi info", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      fopenids : "#{params.openid}_#{params.openid}"
+  #    wbt.getMultiInfo options, method, (err, info) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.dir info
+  #      done()
 
-  describe "buyPlayzoneItem", ->
-    it "should buy playzone itemt", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        zoneid : 1
-        itemid : 'fiash_001'
-        count : 2
-      wbt.buyPlayzoneItem options, method, (err, result) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir result
-        done()
+  #describe "buyPlayzoneItem", ->
+  #  it "should buy playzone itemt", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      zoneid : 1
+  #      itemid : 'fiash_001'
+  #      count : 2
+  #    wbt.buyPlayzoneItem options, method, (err, result) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.dir result
+  #      done()
 
-  describe "getPlayzoneUserinfo", ->
-    it "should get playzone userinfo", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        zoneid : 1
-      wbt.getPlayzoneUserinfo options, method, (err, result) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir result
-        done()
+  #describe "getPlayzoneUserinfo", ->
+  #  it "should get playzone userinfo", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      zoneid : 1
+  #    wbt.getPlayzoneUserinfo options, method, (err, result) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.dir result
+  #      done()
 
-  describe "sendGamebarMsg", ->
-    it "should send gamebar msg", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        frd :"222222222222"
-        msgtype : "1"
-        content : "100分"
-        qua : "V1_AND_QZ_4.9.3_148_RDM_T"
-      wbt.sendGamebarMsg options, method, (err) ->
-        console.error "ERROR:: #{err}" if err?
-        done()
+  #describe "sendGamebarMsg", ->
+  #  it "should send gamebar msg", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      frd :"222222222222"
+  #      msgtype : "1"
+  #      content : "100分"
+  #      qua : "V1_AND_QZ_4.9.3_148_RDM_T"
+  #    wbt.sendGamebarMsg options, method, (err) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      done()
 
-  describe "isLogin", ->
-    it "should is login", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-      wbt.isLogin options, method, (err) ->
-        console.error "ERROR:: #{err}" if err?
-        done()
+  #describe "isLogin", ->
+  #  it "should is login", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #    wbt.isLogin options, method, (err) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      done()
 
-# =======================================================================================
+# #=======================================================================================
 
-  describe "totalVipInfo", ->
-    it "should total vip info", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        member_vip: 1
-        blue_vip:1
-        yellow_vip:1
-        red_vip:1
-        green_vip:1
-        pink_vip:1
-        superqq:1
-        is_3366:1
-      wbt.totalVipInfo options, method, (err, result) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir result
-        done()
+  #describe "totalVipInfo", ->
+  #  it "should total vip info", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      member_vip: 1
+  #      blue_vip:1
+  #      yellow_vip:1
+  #      red_vip:1
+  #      green_vip:1
+  #      pink_vip:1
+  #      superqq:1
+  #      is_3366:1
+  #    wbt.totalVipInfo options, method, (err, result) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.dir result
+  #      done()
 
-  describe "isVip", ->
-    it "should is vip", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
+  #describe "isVip", ->
+  #  it "should is vip", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
 
 
-      wbt.isVip options, method, (err, result) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir result
-        done()
+  #    wbt.isVip options, method, (err, result) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.dir result
+  #      done()
 
-  describe "friendsVipInfo", ->
-    it "should friends vip info", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        fopenids:params.openid
-      wbt.friendsVipInfo options, method, (err, result) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir result
-        done()
+  #describe "friendsVipInfo", ->
+  #  it "should friends vip info", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      fopenids:params.openid
+  #    wbt.friendsVipInfo options, method, (err, result) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.dir result
+  #      done()
 
-  describe "isSetup", ->
-    it "should is setup", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
+  #describe "isSetup", ->
+  #  it "should is setup", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
 
-      wbt.isSetup options, method, (err, isSetuped) ->
-        console.error "ERROR:: #{err}" if err?
-        console.log isSetuped
-        done()
+  #    wbt.isSetup options, method, (err, isSetuped) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.log isSetuped
+  #      done()
 
-  describe "getAppFlag", ->
-    it "should get app flag", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-      wbt.getAppFlag options, method, (err, customflag) ->
-        console.error "ERROR:: #{err}" if err?
-        console.log "customflag: #{customflag}"
-        done()
+  #describe "getAppFlag", ->
+  #  it "should get app flag", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #    wbt.getAppFlag options, method, (err, customflag) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      console.log "customflag: #{customflag}"
+  #      done()
 
-  describe "delAppFlag", ->
-    it "should del app flag", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        acttype: 1
-        usergroupid: 2323
-      wbt.delAppFlag options, method, (err) ->
-        console.error "ERROR:: #{err}" if err?
-        done()
+  #describe "delAppFlag", ->
+  #  it "should del app flag", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      acttype: 1
+  #      usergroupid: 2323
+  #    wbt.delAppFlag options, method, (err) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      done()
 
-  describe "isAreaLogin", ->
-    it "should is area login", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        seqid: "afdasfadsfasd"
-      wbt.isAreaLogin options, method, (err) ->
-        console.error "ERROR:: #{err}" if err?
-        done()
+  #describe "isAreaLogin", ->
+  #  it "should is area login", (done) ->
+  #    options =
+  #      openid: params.openid
+  #      openkey: params.openkey
+  #      seqid: "afdasfadsfasd"
+  #    wbt.isAreaLogin options, method, (err) ->
+  #      console.error "ERROR:: #{err}" if err?
+  #      done()
 
 

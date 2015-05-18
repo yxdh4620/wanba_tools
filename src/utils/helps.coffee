@@ -63,11 +63,18 @@ makeReqOptions = (self, uri, method, params) ->
   params.pf or= self.pf
   params.format or= self.format
   params.sig = self.makeSignature uri, method, params
+  if method == "POST"
+    options =
+      url: "#{self.host}#{uri}"
+      json: true
+      method: method
+      body: params
+    console.dir options
+    return options
   options =
-    url: "#{self.host}#{uri}"
+    url: "#{self.host}#{uri}?#{raw(params)}"
     json: true
-    method: method
-    body: params
+    method:method
   console.dir options
   return options
 

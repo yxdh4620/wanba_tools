@@ -32,7 +32,7 @@ makeSignature = (url, method="GET", params={}, exclusive=[]) ->
   digest = crypto.createHmac('sha1', "#{@appkey}&")
     .update(str)
     .digest("base64")
-  return digest
+  return encodeURIComponent(digest)
 
 module.exports =
   makeSignature: makeSignature

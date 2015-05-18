@@ -28,7 +28,7 @@ getAppFriends = (params, method, callback) ->
     return callback err if err?
     console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
-    return callback null
+    return callback null, body
   return
 
 #验证是否平台好友
@@ -39,7 +39,7 @@ getAppFriends = (params, method, callback) ->
 #     is_friend 是否为好友（0： 不是好友； >=1： 是好友）。当pf=qqgame或pf=3366时，表示是否为QQ好友。
 #     is_gamefriend 是否为QQGame好友（0： 不是QQGame好友； >=1： 是QQGame好友）。（只有pf=qqgame时，返回此参数）
 isFriend = (params, method, callback) ->
-  options  = _makeReqOptions(@, RequestUrIs.IS_FRIEND_URI, method, params)
+  options = _makeReqOptions(@, RequestUrIs.IS_FRIEND_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
     console.dir body
@@ -75,10 +75,7 @@ getRcmdFriends = (params, method, callback) ->
     return callback err if err?
     console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
-    result =
-      items: body.items
-      openid: body.openid
-    return callback null, result
+    return callback null, body
   return
 
 module.exports =

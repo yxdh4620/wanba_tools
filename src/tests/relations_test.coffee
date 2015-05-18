@@ -1,17 +1,17 @@
 
 should = require "should"
 _ = require 'underscore'
-config = require('../config/config')
-
+#config = require('../config/config')
+config = require "../config/test_config"
 WanbaTools = require "../wanba_tools"
 
-options = config
+wbtOptions= config
 
 params =
-  openid: "11111111111111111"
-  openkey: "2222222222222222"
+  openid: config.openid
+  openkey: config.openkey
 
-wbt = new WanbaTools(options)
+wbt = new WanbaTools(wbtOptions)
 console.dir wbt
 
 method = "POST"
@@ -21,7 +21,10 @@ describe "test relation", ->
 
   describe "getAppFriends", ->
     it "should get app friends", (done) ->
-      wbt.getAppFriends params, method, (err, result) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+      wbt.getAppFriends options, method, (err, result) ->
         console.error "ERROR:: #{err}" if err?
         console.dir result
         done()
@@ -32,7 +35,7 @@ describe "test relation", ->
         openid: params.openid
         openkey: params.openkey
         fopenid: params.openid
-      wbt.isFriend params, method, (err, result) ->
+      wbt.isFriend options, method, (err, result) ->
         console.error "ERROR:: #{err}" if err?
         console.dir result
         done()
