@@ -1,8 +1,8 @@
 
 should = require "should"
 _ = require 'underscore'
-config = require('../config/config')
-
+#config = require('../config/config')
+config = require "../config/test_config"
 WanbaTools = require "../wanba_tools"
 
 options = config
@@ -11,8 +11,8 @@ wbt = new WanbaTools(options)
 console.dir wbt
 
 params =
-  openid: "11111111111111111"
-  openkey: "2222222222222222"
+  openid: config.openid
+  openkey: config.openkey
 
 #在params 错误时， POST告知哪个参数错误，但GET方式没有告诉是哪个参数错误
 #  所以请尽可能使用POST方式，另外GET方式时有些请求参数的长度可能会超过2048
@@ -23,84 +23,69 @@ describe "test users", ->
 
   describe "getInfo", ->
     it "should get info", (done) ->
-      wbt.getInfo  params, method, (err, info) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+
+      wbt.getInfo  options, method, (err, info) ->
         console.error "ERROR:: #{err}" if err?
         console.dir info
         done()
 
   describe "getMultiInfo", ->
     it "should get multi info", (done) ->
-      params.fopenids = "#{params.openid}_#{params.openid}"
-      wbt.getMultiInfo params, method, (err, info) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+        fopenids : "#{params.openid}_#{params.openid}"
+      wbt.getMultiInfo options, method, (err, info) ->
         console.error "ERROR:: #{err}" if err?
         console.dir info
-        delete params.fopenids
-        done()
-
-  describe "setAchievement", ->
-    it "should set achievement", (done) ->
-      params.user_attr =
-        level:1
-        key1:2292992
-      wbt.setAchievement params, method, (err) ->
-        console.error "ERROR:: #{err}" if err?
-        delete params.user_attr
-        done()
-
-  describe "getGamebarRanklist", ->
-    it "should get gamebar ranklist", (done) ->
-      params.rankdim = "key1"
-      params.rank_start = 0
-      params.pull_cnt = 50
-      params.direction = 0
-      wbt.getGamebarRanklist params, method, (err, ranklist) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir ranklist
-        delete params.rankdim
-        delete params.rank_start
-        delete params.pull_cnt
-        delete params.direction
         done()
 
   describe "buyPlayzoneItem", ->
     it "should buy playzone itemt", (done) ->
-      params.zoneid = 1
-      params.itemid = 'fiash_001'
-      params.count = 2
-      wbt.buyPlayzoneItem params, method, (err, result) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+        zoneid : 1
+        itemid : 'fiash_001'
+        count : 2
+      wbt.buyPlayzoneItem options, method, (err, result) ->
         console.error "ERROR:: #{err}" if err?
         console.dir result
-        delete params.zoneid
-        delete params.itemid
-        delete params.count
         done()
 
   describe "getPlayzoneUserinfo", ->
     it "should get playzone userinfo", (done) ->
-      params.zoneid = 1
-      wbt.getPlayzoneUserinfo params, method, (err, result) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+        zoneid : 1
+      wbt.getPlayzoneUserinfo options, method, (err, result) ->
         console.error "ERROR:: #{err}" if err?
         console.dir result
-        delete params.zoneid
         done()
 
   describe "sendGamebarMsg", ->
     it "should send gamebar msg", (done) ->
-      params.frd = "222222222222"
-      params.msgtype = "1"
-      params.content = "100分"
-      params.qua = "V1_AND_QZ_4.9.3_148_RDM_T"
-      wbt.sendGamebarMsg params, method, (err) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+        frd :"222222222222"
+        msgtype : "1"
+        content : "100分"
+        qua : "V1_AND_QZ_4.9.3_148_RDM_T"
+      wbt.sendGamebarMsg options, method, (err) ->
         console.error "ERROR:: #{err}" if err?
-        delete params.frd
-        delete params.msgtype
-        delete params.content
-        delete params.qua
         done()
 
   describe "isLogin", ->
     it "should is login", (done) ->
-      wbt.isLogin params, method, (err) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+      wbt.isLogin options, method, (err) ->
         console.error "ERROR:: #{err}" if err?
         done()
 
@@ -126,7 +111,12 @@ describe "test users", ->
 
   describe "isVip", ->
     it "should is vip", (done) ->
-      wbt.isVip params, method, (err, result) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+
+
+      wbt.isVip options, method, (err, result) ->
         console.error "ERROR:: #{err}" if err?
         console.dir result
         done()
@@ -144,11 +134,44 @@ describe "test users", ->
 
   describe "isSetup", ->
     it "should is setup", (done) ->
-      wbt.isSetup params, method, (err, isSetuped) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+
+      wbt.isSetup options, method, (err, isSetuped) ->
         console.error "ERROR:: #{err}" if err?
         console.log isSetuped
         done()
 
+  describe "getAppFlag", ->
+    it "should get app flag", (done) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+      wbt.getAppFlag options, method, (err, customflag) ->
+        console.error "ERROR:: #{err}" if err?
+        console.log "customflag: #{customflag}"
+        done()
 
+  describe "delAppFlag", ->
+    it "should del app flag", (done) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+        acttype: 1
+        usergroupid: 2323
+      wbt.delAppFlag options, method, (err) ->
+        console.error "ERROR:: #{err}" if err?
+        done()
+
+  describe "isAreaLogin", ->
+    it "should is area login", (done) ->
+      options =
+        openid: params.openid
+        openkey: params.openkey
+        seqid: "afdasfadsfasd"
+      wbt.isAreaLogin options, method, (err) ->
+        console.error "ERROR:: #{err}" if err?
+        done()
 
 

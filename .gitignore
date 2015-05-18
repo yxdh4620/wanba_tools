@@ -12,6 +12,7 @@ pids
 *.swn
 *.orig
 .DS_Store
+test_config
 npm-debug.log
 tags
 tests

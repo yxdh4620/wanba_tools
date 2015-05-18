@@ -7,18 +7,6 @@ request = require 'request'
 RequestUrIs = require "../enums/request_uris"
 helps = require "../utils/helps"
 
-#_makeReqOptions = (self, uri, method, params) ->
-#  params.appid = self.appid
-#  params.pf or= self.pf
-#  params.format or= self.format
-#  params.sig = self.makeSignature uri, method, params
-#  options =
-#    url: "#{self.host}#{uri}"
-#    json: true
-#    method: method
-#    body: params
-#  return options
-
 _makeReqOptions = helps.makeReqOptions
 
 ###
@@ -38,7 +26,6 @@ _makeReqOptions = helps.makeReqOptions
 ###
 getInfo = (params, method='POST', callback) ->
   options = _makeReqOptions(@, RequestUrIs.GET_INFO_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
@@ -69,42 +56,6 @@ getInfo = (params, method='POST', callback) ->
 ###
 getMultiInfo = (params, method='POST',  callback) ->
   options = _makeReqOptions(@, RequestUrIs.GET_MULTI_INFO_URI, method, params)
-  console.dir options
-  request options, (err, res, body) ->
-    return callback err if err?
-    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
-    return callback null, body
-  return
-
-###
-# 上传玩家在应用中得等级信息
-# params 同getInfo
-#   user_attr: json {level uint 必须， key1:uint, key2:uint}
-# return {
-#   "ret":0
-#   "is_lost":0
-# }
-#
-###
-setAchievement = (params, method='POST', callback) ->
-  options = _makeReqOptions(@, RequestUrIs.SET_ACHIEVEMENT_URI, method, params)
-  console.dir options
-  request options, (err, res, body) ->
-    return callback err if err?
-    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
-    return callback null, body
-  return
-###
-# 拉取排行榜列表
-# params 同getInfo
-#   rankdim 否  int 拉取纬度，需与排行榜配置信息表中一致
-#   rank_start  否  int 拉取排行的起始位置（默认0）
-#   pull_cnt  否  int 拉取排行的个数（最小为3，最大为50，默认3）
-#   direction 否  int 拉取排行的方向（-1往前拉取，0向后拉取，默认0）
-###
-getGamebarRanklist = (params, method='POST', callback) ->
-  options = _makeReqOptions(@, RequestUrIs.GET_GAMEBAR_RANKLIST_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
@@ -122,7 +73,6 @@ getGamebarRanklist = (params, method='POST', callback) ->
 ###
 buyPlayzoneItem = (params, method='POST', callback) ->
   options = _makeReqOptions(@, RequestUrIs.BUY_PLAYZONE_ITEM_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
@@ -139,10 +89,8 @@ buyPlayzoneItem = (params, method='POST', callback) ->
 ###
 getPlayzoneUserinfo = (params, method='POST',  callback) ->
   options = _makeReqOptions(@, RequestUrIs.GET_PLAYZONE_USERINFO_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
@@ -157,10 +105,8 @@ getPlayzoneUserinfo = (params, method='POST',  callback) ->
 ###
 sendGamebarMsg = (params, method='POST', callback) ->
   options = _makeReqOptions(@, RequestUrIs.SEND_GAMEBAR_MSG, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null
   return
@@ -171,10 +117,8 @@ sendGamebarMsg = (params, method='POST', callback) ->
 ###
 isLogin = (params, method='POST', callback) ->
   options  = _makeReqOptions(@, RequestUrIs.IS_LOGIN_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null
   return
@@ -199,7 +143,6 @@ totalVipInfo = (params, method, callback) ->
   options = _makeReqOptions(@, RequestUrIs.TOTAL_VIP_INFO_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
@@ -209,7 +152,6 @@ isVip = (params, method, callback) ->
   options = _makeReqOptions(@, RequestUrIs.IS_VIP_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
@@ -220,7 +162,6 @@ friendsVipInfo = (params, method, callback) ->
   options = _makeReqOptions(@, RequestUrIs.FRIENDS_VIP_INFO_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
@@ -230,18 +171,61 @@ isSetup = (params, method, callback) ->
   options = _makeReqOptions(@, RequestUrIs.IS_SETUP_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     isSetuped = if body.setuped == 1 then true else false
     return callback null, isSetuped
   return
 
 
+#用户在应用中的用户标识
+getAppFlag = (params, method, callback) ->
+  options = _makeReqOptions(@, RequestUrIs.GET_APP_FLAG_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    return callback null, body.customflag
+  return
+
+#清除用户在应用中的用户标识（例如领取奖励后）
+#  用户标识customflag是一个4字节的数字，其含义如下：
+#  d0~d7：用户在应用中所属的用户群ID，1表示濒临沉默用户，2表示沉默用户。
+#  d29：高潜付费用户标志，1表示该用户是高潜付费用户，0表示该用户不是高潜付费用户。
+#  另外，customflag是四字节无符号数字，使用时应当做unsigned int来解析，如果开发语言（如java）中没有unsigned int类型，请使用long类型来解析，否则可能会出现溢出情况。
+#  例如：customflag=2684354562，二进制bit位d31~d0依次为 10100000 00000000 00000000 00000010，其d0~d7位为00000010，即该用户的群用户ID为2，是沉默用户；其d29位为1，所以也是高潜付费用户。
+#  具体见：
+#     http://wiki.open.qq.com/wiki/v3/user/del_app_flag
+#
+#  params:
+#     acttype  是  unsigned int  指定操作类型。
+#       1：清除用户customflag中的用户群ID信息。
+#       3：清除用户高潜付费标识位。
+#     usergroupid 否  unsigned int  用户群ID，当acttype=1时需传入。
+#       请通过v3/user/get_app_flag查询用户标识customflag中的用户群ID。
+delAppFlag = (params, method, callback) ->
+  options = _makeReqOptions(@, RequestUrIs.DEL_APP_FLAG_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    return callback null
+  return
+
+#验证用户是否从选区界面进入多区多服应用
+#   具体见：http://wiki.open.qq.com/wiki/v3/user/is_area_login
+#   params:
+#     seqid 必须  string  标识单次多区多服登录的特征码，通过该seqid可找到用户登录的唯一记录。由平台直接传给应用，应用原样传给平台即可。
+#     用户点击某一大区服务器登录后，服务器端会验证用户登录态，登记登录请求信息，并产生seqid，然后跳转到应用服务器，在跳转URL中带有seqid以及openid，openkey参数，见接口说明中流程图。
+isAreaLogin = (params, method, callback) ->
+  options = _makeReqOptions(@, RequestUrIs.IS_AREA_LOGIN_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    return callback null
+  return
+
+
 module.exports =
   getInfo: getInfo
   getMultiInfo: getMultiInfo
-  setAchievement:setAchievement
-  getGamebarRanklist:getGamebarRanklist
   buyPlayzoneItem: buyPlayzoneItem
   getPlayzoneUserinfo: getPlayzoneUserinfo
   sendGamebarMsg: sendGamebarMsg
@@ -251,5 +235,8 @@ module.exports =
   isVip: isVip
   friendsVipInfo: friendsVipInfo
   isSetup: isSetup
+  getAppFlag: getAppFlag
+  delAppFlag: delAppFlag
+  isAreaLogin: isAreaLogin
 
 

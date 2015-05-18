@@ -68,6 +68,7 @@ makeReqOptions = (self, uri, method, params) ->
     json: true
     method: method
     body: params
+  console.dir options
   return options
 
 module.exports =

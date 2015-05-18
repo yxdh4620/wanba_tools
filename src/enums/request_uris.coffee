@@ -1,9 +1,8 @@
 
 module.exports =
+  # users.coffee
   GET_INFO_URI : "/v3/user/get_info"
   GET_MULTI_INFO_URI: "/v3/user/get_multi_info"
-  SET_ACHIEVEMENT_URI: "/v3/user/set_achievement"
-  GET_GAMEBAR_RANKLIST_URI: "/v3/user/get_gamebar_ranklist"
   BUY_PLAYZONE_ITEM_URI: "/v3/user/buy_playzone_item"
   GET_PLAYZONE_USERINFO_URI:"/v3/user/get_playzone_userinfo"
   SEND_GAMEBAR_MSG: "/v3/user/send_gamebar_msg"
@@ -12,7 +11,18 @@ module.exports =
   IS_VIP_URI:"/v3/user/is_vip"
   FRIENDS_VIP_INFO_URI: "/v3/user/friends_vip_info"
   IS_SETUP_URI: "/v3/user/is_setup"
+  GET_APP_FLAG_URI: "/v3/user/get_app_flag"
+  DEL_APP_FLAG_URI: "/v3/user/del_app_flag"
+  IS_AREA_LOGIN_URI: "/v3/user/is_area_login"
 
-
+  # relations.coffee
   GET_APP_FRIENDS_URI:"/v3/relation/get_app_friends"
+  IS_FRIEND_URI: "/v3/relation/is_friend"
+  GET_RCMD_FRIENDS_URI: "/3/relation/get_rcmd_friends"
+
+  # generalizes.coffee
+  SET_ACHIEVEMENT_URI: "/v3/user/set_achievement"
+  GET_GAMEBAR_RANKLIST_URI: "/v3/user/get_gamebar_ranklist"
+
+
 
