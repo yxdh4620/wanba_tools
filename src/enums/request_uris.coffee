@@ -22,6 +22,7 @@ module.exports =
 
   # generalizes.coffee
   SET_ACHIEVEMENT_URI: "/v3/user/set_achievement"
+  GET_ACHIEVEMENT_URI: "/v3/user/get_achievement"
   GET_GAMEBAR_RANKLIST_URI: "/v3/user/get_gamebar_ranklist"
 
 

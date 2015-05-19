@@ -1,7 +1,7 @@
 {
   "name": "wanba-tools",
   "description": "wanba-tools APP",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/yxdh4620/wanba-tools",
   "author": {
     "name": "yxdh4620",
@@ -34,6 +34,7 @@
     "request": "2.27.0",
     "debug": "latest",
     "iconv-lite":"0.4.7",
+    "querystring":"latest",
     "xml2js": "0.4.6"
   },
   "devDependencies": {

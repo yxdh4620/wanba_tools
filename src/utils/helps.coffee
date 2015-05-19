@@ -68,11 +68,14 @@ makeReqOptions = (self, uri, method, params) ->
       url: "#{self.host}#{uri}"
       json: true
       method: method
-      body: params
+      headers:
+        'Content-Type': 'application/x-www-form-urlencoded'
+      body: querystring.stringify(params)
     console.dir options
     return options
+  #params.sig =encodeURIComponent(params.sig)
   options =
-    url: "#{self.host}#{uri}?#{raw(params)}"
+    url: "#{self.host}#{uri}?#{querystring.stringify(params)}"
     json: true
     method:method
   console.dir options

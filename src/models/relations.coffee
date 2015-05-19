@@ -23,10 +23,8 @@ _makeReqOptions = helps.makeReqOptions
 ###
 getAppFriends = (params, method, callback) ->
   options  = _makeReqOptions(@, RequestUrIs.GET_APP_FRIENDS_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
@@ -42,7 +40,6 @@ isFriend = (params, method, callback) ->
   options = _makeReqOptions(@, RequestUrIs.IS_FRIEND_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     result =
       is_friend: body.is_friend>0
@@ -73,7 +70,6 @@ getRcmdFriends = (params, method, callback) ->
   options  = _makeReqOptions(@, RequestUrIs.GET_RCMD_FRIENDS_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    console.dir body
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return

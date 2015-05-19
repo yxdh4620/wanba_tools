@@ -22,12 +22,29 @@ _makeReqOptions = helps.makeReqOptions
 ###
 setAchievement = (params, method='POST', callback) ->
   options = _makeReqOptions(@, RequestUrIs.SET_ACHIEVEMENT_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
+
+###
+# 查询用户在应用中的等级相关信息
+# params:
+#   fopenids  必须  string  需要获取等级的用户对应的openid列表，多个openid之间用“_”分隔，每次最多可传入50个openid。
+#   area_name 可选  string  用户所在的分区的名称，对于多区多服应用，可传入该参数获取指定分区中用户的等级：
+#   如果传入area_name，即可获取指定分区里的用户的等级；
+#   如果不传area_name或者area_name为空，则获取默认的area_name的用户等级。
+###
+getAchievement = (params, method="POST", callback) ->
+  options = _makeReqOptions(@, RequestUrIs.GET_ACHIEVEMENT_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    return callback null, body
+  return
+
+
 ###
 # 拉取排行榜列表
 # params 同getInfo
@@ -38,7 +55,6 @@ setAchievement = (params, method='POST', callback) ->
 ###
 getGamebarRanklist = (params, method='POST', callback) ->
   options = _makeReqOptions(@, RequestUrIs.GET_GAMEBAR_RANKLIST_URI, method, params)
-  console.dir options
   request options, (err, res, body) ->
     return callback err if err?
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
@@ -47,5 +63,6 @@ getGamebarRanklist = (params, method='POST', callback) ->
 
 module.exports =
   setAchievement:setAchievement
+  getAchievement:getAchievement
   getGamebarRanklist:getGamebarRanklist
 
