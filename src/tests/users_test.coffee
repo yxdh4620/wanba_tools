@@ -36,34 +36,10 @@ describe "test users", ->
       options =
         openid: params.openid
         openkey: params.openkey
-        fopenids : "#{params.openid}_#{params.openid}"
+        fopenids : "4831900A609894979F91ADCB5483D71F_5E9E03D7B42C82242643EFC27D28DC82"
       wbt.getMultiInfo options, method, (err, info) ->
         console.error "ERROR:: #{err}" if err?
         console.dir info
-        done()
-
-  describe "buyPlayzoneItem", ->
-    it "should buy playzone itemt", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        zoneid : 1
-        itemid : 'fiash_001'
-        count : 2
-      wbt.buyPlayzoneItem options, method, (err, result) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir result
-        done()
-
-  describe "getPlayzoneUserinfo", ->
-    it "should get playzone userinfo", (done) ->
-      options =
-        openid: params.openid
-        openkey: params.openkey
-        zoneid : 1
-      wbt.getPlayzoneUserinfo options, method, (err, result) ->
-        console.error "ERROR:: #{err}" if err?
-        console.dir result
         done()
 
   describe "sendGamebarMsg", ->

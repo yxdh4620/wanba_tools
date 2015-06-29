@@ -32,6 +32,7 @@ getInfo = (params, method='POST', callback) ->
     return callback null, body
   return
 
+
 ###
 # 获取多个玩家信息（QQ昵称、头像、性别）, 只返回安装了应用玩家信息
 # params:
@@ -56,39 +57,6 @@ getInfo = (params, method='POST', callback) ->
 ###
 getMultiInfo = (params, method='POST',  callback) ->
   options = _makeReqOptions(@, RequestUrIs.GET_MULTI_INFO_URI, method, params)
-  request options, (err, res, body) ->
-    return callback err if err?
-    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
-    return callback null, body
-  return
-
-###
-# 积分购买道具
-# params 同getInfo
-#   zoneid 是  int 区ID，用于区分用户是在哪一款平台下(Android、IOS等)?这个说明有歧义：怀疑应该是应用的分区（默认1）
-#   itemid 是  string  道具ID
-#   count  否  int 兑换道具数量
-# return  见API http://wiki.open.qq.com/wiki/v3/user/buy_playzone_item
-#   吐槽：奇葩的腾讯， API中得返回参数竟然和实际不一样？
-###
-buyPlayzoneItem = (params, method='POST', callback) ->
-  options = _makeReqOptions(@, RequestUrIs.BUY_PLAYZONE_ITEM_URI, method, params)
-  request options, (err, res, body) ->
-    return callback err if err?
-    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
-    return callback null, body
-  return
-
-###
-# 查询达人信息
-# params 同getInfo
-#   zoneid 是  int 区ID，用于区分用户是在哪一款平台下(Android、IOS等)?这个说明有歧义：怀疑应该是应用的分区（默认1）
-#
-# return 见API http://wiki.open.qq.com/wiki/v3/user/get_playzone_userinfo#3_.E7.A4.BA.E4.BE.8B.E4.BB.A3.E7.A0.81
-#
-###
-getPlayzoneUserinfo = (params, method='POST',  callback) ->
-  options = _makeReqOptions(@, RequestUrIs.GET_PLAYZONE_USERINFO_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
     return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
@@ -226,8 +194,6 @@ isAreaLogin = (params, method, callback) ->
 module.exports =
   getInfo: getInfo
   getMultiInfo: getMultiInfo
-  buyPlayzoneItem: buyPlayzoneItem
-  getPlayzoneUserinfo: getPlayzoneUserinfo
   sendGamebarMsg: sendGamebarMsg
   isLogin:isLogin
 

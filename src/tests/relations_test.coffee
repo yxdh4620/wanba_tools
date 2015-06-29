@@ -34,19 +34,20 @@ describe "test relation", ->
       options =
         openid: params.openid
         openkey: params.openkey
-        fopenid: params.openid
+        fopenid: "4831900A609894979F91ADCB5483D71F"
       wbt.isFriend options, method, (err, result) ->
         console.error "ERROR:: #{err}" if err?
         console.dir result
         done()
 
-  describe "getAppFriends", ->
+  describe "getRcmdFriends", ->
     options =
+      pf: "qzone"
       openid: params.openid
       openkey: params.openkey
-      fopenid: params.openid
-    it "should get app friends", (done) ->
-      wbt.getAppFriends options, method, (err, result) ->
+      installed:2
+    it "should get rcmd friends", (done) ->
+      wbt.getRcmdFriends options, method, (err, result) ->
         console.error "ERROR:: #{err}" if err?
         console.dir result
         done()
