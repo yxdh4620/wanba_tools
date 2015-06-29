@@ -19,6 +19,7 @@ class WanbaTools
     assert @appid, "missing wanba appid"
     assert @appkey, "missing wanba appkey"
     models_path = path.join __dirname, './models'
+    #@isCallbackError = false
     fs.readdirSync(models_path).forEach (file)=>
       obj = require "#{models_path}/#{file}"
       for key, v of obj

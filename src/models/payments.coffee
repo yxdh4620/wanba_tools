@@ -22,7 +22,7 @@ buyPlayzoneItem = (params, method='POST', callback) ->
   options = _makeReqOptions(@, RequestUrIs.BUY_PLAYZONE_ITEM_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    #return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
 
