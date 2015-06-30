@@ -61,8 +61,29 @@ getGamebarRanklist = (params, method='POST', callback) ->
     return callback null, body
   return
 
+###
+# 验证好友邀请的invkey
+# params
+#   invkey: 加密串 （canvasURL返回参数）
+#   itime: 邀请时间（canvasURL返回参数）
+#   iopenid: 发起邀请者的openid （canvasURL返回参数）
+# return boolean is_right(true, false)
+###
+verifyInvkey = (params, method='POST', callback) ->
+  options = _makeReqOptions(@, RequestUrIs.VERIFY_INVKEY_URI, method, params)
+  request options, (err, res, body) ->
+    return callback err if err?
+    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
+    isRight = false
+    isRight = true if body.is_right == 1
+    return callback null, isRight
+  return
+
+
 module.exports =
   setAchievement:setAchievement
   getAchievement:getAchievement
   getGamebarRanklist:getGamebarRanklist
+  verifyInvkey: verifyInvkey
+
 
