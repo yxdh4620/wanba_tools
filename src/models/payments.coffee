@@ -21,7 +21,8 @@ _makeReqOptions = helps.makeReqOptions
 buyPlayzoneItem = (params, method='POST', callback) ->
   options = _makeReqOptions(@, RequestUrIs.BUY_PLAYZONE_ITEM_URI, method, params)
   request options, (err, res, body) ->
-    return callback err if err?
+    return callback {code:99887766, message:err} if err?
+    return callback {code:body.code, message:body.message} if body.code? and body.code != 0
     #return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
     return callback null, body
   return
@@ -39,7 +40,6 @@ getPlayzoneUserinfo = (params, method='POST',  callback) ->
   request options, (err, res, body) ->
     return callback err if err?
     return callback new Error("errCode: #{body.code} message: #{body.message}") if body.code? and body.code != 0
-    console.dir body
     return callback new Error("message: missing userinfo") unless body.data[0]
     return callback null, body.data[0]
   return
