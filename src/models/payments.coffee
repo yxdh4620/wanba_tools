@@ -38,8 +38,10 @@ getPlayzoneUserinfo = (params, method='POST',  callback) ->
   options = _makeReqOptions(@, RequestUrIs.GET_PLAYZONE_USERINFO_URI, method, params)
   request options, (err, res, body) ->
     return callback err if err?
-    return callback new Error("errCode: #{body.ret} message: #{body.msg}") if body.ret? and body.ret != 0
-    return callback null, body
+    return callback new Error("errCode: #{body.code} message: #{body.message}") if body.code? and body.code != 0
+    console.dir body
+    return callback new Error("message: missing userinfo") unless body.data[0]
+    return callback null, body.data[0]
   return
 
 module.exports =
